@@ -3,95 +3,280 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Aurora Storefront — Sklep internetowy</title>
-<meta name="description" content="Aurora Storefront — minimalistyczny sklep z elektroniką i akcesoriami." />
+<title>Aurora Storefront — Sklep z elektroniką i akcesoriami</title>
+<meta name="description" content="Aurora Storefront — minimalistyczny sklep z elektroniką, audio i akcesoriami biurowymi." />
 <style>
   :root {
-    --bg: #fafafa;
+    --bg: #f8f8fa;
     --panel: #ffffff;
-    --border: #e8e8ec;
-    --text: #17171c;
-    --muted: #71717a;
-    --accent: #7c5cf6;
+    --border: #e6e6ee;
+    --text: #14141a;
+    --muted: #6c6c78;
+    --accent: #6c4cf6;
+    --accent-soft: #f1eeff;
+    --green: #16a34a;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: "Segoe UI", system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); }
+  html { scroll-behavior: smooth; }
+  body { font-family: "Segoe UI", system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+  .promo {
+    background: var(--text); color: #fff; text-align: center;
+    font-size: 12px; padding: 8px 16px; letter-spacing: .02em;
+  }
+  .promo b { color: #b9a6ff; }
   header {
-    position: sticky; top: 0; z-index: 10;
+    position: sticky; top: 0; z-index: 30;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 14px 24px; background: rgba(255,255,255,.85); backdrop-filter: blur(12px);
+    padding: 14px 32px; background: rgba(255,255,255,.88); backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
   }
-  .logo { font-weight: 800; font-size: 18px; letter-spacing: -0.02em; }
+  .logo { font-weight: 800; font-size: 20px; letter-spacing: -0.03em; text-decoration: none; color: var(--text); }
   .logo span { color: var(--accent); }
-  nav { display: flex; gap: 20px; }
-  nav a { color: var(--muted); text-decoration: none; font-size: 14px; transition: .15s; }
-  nav a:hover { color: var(--text); }
+  nav { display: flex; gap: 26px; }
+  nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: .15s; }
+  nav a:hover, nav a.active { color: var(--text); }
   .cart-btn {
-    display: flex; align-items: center; gap: 8px;
+    display: flex; align-items: center; gap: 10px;
     border: 1px solid var(--border); background: var(--panel);
-    border-radius: 999px; padding: 8px 16px; font-size: 14px; cursor: pointer; transition: .15s;
+    border-radius: 999px; padding: 9px 18px; font-size: 14px; font-weight: 600; cursor: pointer; transition: .15s;
   }
   .cart-btn:hover { border-color: var(--accent); }
   .cart-count {
     background: var(--accent); color: #fff; font-size: 11px; font-weight: 700;
-    border-radius: 999px; min-width: 20px; height: 20px; display: grid; place-items: center;
+    border-radius: 999px; min-width: 22px; height: 22px; display: grid; place-items: center; padding: 0 6px;
   }
-  .hero { text-align: center; padding: 80px 24px 56px; }
-  .hero .tag { color: var(--accent); font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
-  .hero h1 { font-size: clamp(32px, 6vw, 56px); letter-spacing: -0.03em; margin: 14px 0; }
-  .hero p { color: var(--muted); max-width: 520px; margin: 0 auto 28px; font-size: 17px; }
+
+  /* HERO */
+  .hero {
+    max-width: 1180px; margin: 28px auto 0; padding: 0 24px;
+  }
+  .hero-box {
+    display: grid; grid-template-columns: 1.15fr 1fr; align-items: center; gap: 40px;
+    background: linear-gradient(135deg, #17152b 0%, #2a1f54 100%);
+    color: #fff; border-radius: 28px; padding: 56px; overflow: hidden; position: relative;
+  }
+  .hero-tag {
+    display: inline-block; background: rgba(255,255,255,.12); color: #d6cbff;
+    font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 999px; letter-spacing: .06em; text-transform: uppercase;
+  }
+  .hero h1 { font-size: clamp(32px, 4.6vw, 52px); letter-spacing: -0.03em; line-height: 1.08; margin: 18px 0 14px; }
+  .hero p { color: #c9c5e0; font-size: 16px; max-width: 460px; margin-bottom: 28px; }
+  .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
   .btn {
-    display: inline-block; background: var(--text); color: #fff; text-decoration: none;
-    padding: 13px 28px; border-radius: 999px; font-size: 14px; font-weight: 600; transition: .2s;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fff; color: var(--text); text-decoration: none; border: none;
+    padding: 13px 26px; border-radius: 999px; font-size: 14px; font-weight: 600; cursor: pointer; transition: .2s;
   }
-  .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -8px rgba(0,0,0,.25); }
-  .section { max-width: 1100px; margin: 0 auto; padding: 48px 24px; }
-  .section h2 { font-size: 24px; letter-spacing: -0.02em; margin-bottom: 4px; }
-  .section .sub { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
-  .products { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
-  .product {
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -8px rgba(0,0,0,.35); }
+  .btn-outline { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.28); }
+  .btn-outline:hover { border-color: #fff; }
+  .hero-img {
+    aspect-ratio: 4/3; width: 100%; object-fit: cover; border-radius: 20px;
+    box-shadow: 0 28px 60px -20px rgba(0,0,0,.6);
+  }
+
+  /* PERKS */
+  .perks {
+    max-width: 1180px; margin: 28px auto 0; padding: 0 24px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+  }
+  .perk {
     background: var(--panel); border: 1px solid var(--border); border-radius: 16px;
-    overflow: hidden; transition: .2s;
+    padding: 18px 20px; display: flex; align-items: center; gap: 14px;
   }
-  .product:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -20px rgba(0,0,0,.15); }
-  .thumb {
-    aspect-ratio: 1; display: grid; place-items: center; font-size: 52px;
-    background: linear-gradient(135deg, var(--c1), var(--c2));
+  .perk-ic {
+    width: 40px; height: 40px; border-radius: 12px; background: var(--accent-soft);
+    color: var(--accent); display: grid; place-items: center; font-size: 18px; flex-shrink: 0;
   }
-  .p-body { padding: 16px; }
-  .p-name { font-weight: 600; font-size: 15px; }
-  .p-cat { color: var(--muted); font-size: 12px; margin: 4px 0 10px; }
-  .p-foot { display: flex; justify-content: space-between; align-items: center; }
-  .price { font-weight: 700; }
-  .add {
-    border: 1px solid var(--border); background: none; border-radius: 999px;
-    padding: 7px 14px; font-size: 12px; font-weight: 600; cursor: pointer; transition: .15s;
+  .perk b { display: block; font-size: 14px; }
+  .perk span { color: var(--muted); font-size: 12px; }
+
+  /* SECTIONS */
+  .section { max-width: 1180px; margin: 0 auto; padding: 64px 24px 24px; }
+  .sec-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+  .section h2 { font-size: 28px; letter-spacing: -0.02em; }
+  .section .sub { color: var(--muted); font-size: 14px; margin-top: 4px; }
+
+  .toolbar { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 26px; }
+  .tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tab {
+    border: 1px solid var(--border); background: var(--panel); color: var(--muted);
+    padding: 9px 18px; border-radius: 999px; font-size: 13px; font-weight: 600; cursor: pointer; transition: .15s;
   }
-  .add:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .tab:hover { color: var(--text); border-color: var(--accent); }
+  .tab.on { background: var(--text); border-color: var(--text); color: #fff; }
   .search {
-    width: 100%; max-width: 420px; padding: 12px 18px; border: 1px solid var(--border);
-    border-radius: 999px; font-size: 14px; margin: 0 0 28px; outline: none; transition: .15s;
+    margin-left: auto; min-width: 240px; padding: 10px 18px; border: 1px solid var(--border);
+    background: var(--panel); border-radius: 999px; font-size: 14px; outline: none; transition: .15s;
   }
-  .search:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(124,92,246,.12); }
-  footer { border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; text-align: center; padding: 32px 24px; }
+  .search:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(108,76,246,.12); }
+
+  .products { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .product {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 18px;
+    overflow: hidden; transition: .22s; display: flex; flex-direction: column; position: relative;
+  }
+  .product:hover { transform: translateY(-5px); box-shadow: 0 22px 44px -22px rgba(20,20,26,.18); }
+  .badge {
+    position: absolute; top: 12px; left: 12px; z-index: 2;
+    font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+    background: var(--text); color: #fff; letter-spacing: .02em;
+  }
+  .badge.new { background: var(--accent); }
+  .badge.sale { background: #e11d48; }
+  .thumb-wrap { aspect-ratio: 4/3; overflow: hidden; background: #eee; cursor: pointer; }
+  .thumb {
+    width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease;
+  }
+  .product:hover .thumb { transform: scale(1.06); }
+  .p-body { padding: 18px; display: flex; flex-direction: column; flex: 1; }
+  .p-top { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--muted); }
+  .stars { color: #f59e0b; font-weight: 700; }
+  .p-name { font-weight: 700; font-size: 16px; margin: 6px 0 4px; cursor: pointer; }
+  .p-name:hover { color: var(--accent); }
+  .p-desc { color: var(--muted); font-size: 13px; margin-bottom: 16px; flex: 1; }
+  .p-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid var(--border); }
+  .price { font-weight: 800; font-size: 17px; }
+  .price del { color: var(--muted); font-weight: 400; font-size: 13px; margin-left: 6px; }
+  .add {
+    border: none; background: var(--text); color: #fff; border-radius: 999px;
+    padding: 9px 16px; font-size: 12px; font-weight: 600; cursor: pointer; transition: .15s;
+  }
+  .add:hover { background: var(--accent); }
+
+  /* BANNER BUNDLE */
+  .bundle {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 24px;
+    padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center;
+  }
+  .bundle img { width: 100%; aspect-ratio: 16/10; object-fit: cover; border-radius: 16px; }
+  .bundle .eyebrow { color: var(--accent); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; }
+  .bundle h3 { font-size: 28px; letter-spacing: -0.02em; margin: 10px 0 12px; }
+  .bundle p { color: var(--muted); margin-bottom: 22px; }
+
+  /* REVIEWS */
+  .reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .rev {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 18px; padding: 24px;
+  }
+  .rev-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .rev-head img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
+  .rev-head b { display: block; font-size: 14px; }
+  .rev-head span { color: var(--muted); font-size: 12px; }
+  .rev p { color: var(--text); font-size: 14px; }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 28px;
+    background: var(--panel); border: 1px solid var(--border); border-radius: 24px; padding: 40px;
+  }
+  .contact-info { display: grid; gap: 16px; align-content: start; }
+  .c-item { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; }
+  .c-item b { display: block; }
+  .c-item span { color: var(--muted); }
+  form.c-form { display: grid; gap: 12px; }
+  .c-form input, .c-form textarea, .c-form select {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 12px;
+    font: inherit; font-size: 14px; outline: none; background: var(--bg);
+  }
+  .c-form input:focus, .c-form textarea:focus { border-color: var(--accent); background: #fff; }
+  .c-form button {
+    justify-self: start; background: var(--accent); color: #fff; border: none;
+    padding: 13px 28px; border-radius: 999px; font-weight: 600; cursor: pointer; font-size: 14px;
+  }
+  .c-form button:hover { filter: brightness(1.08); }
+
+  /* DRAWER (CART) */
+  .backdrop {
+    position: fixed; inset: 0; background: rgba(15,15,22,.5); backdrop-filter: blur(4px);
+    z-index: 60; opacity: 0; pointer-events: none; transition: opacity .25s;
+  }
+  .backdrop.open { opacity: 1; pointer-events: auto; }
+  .drawer {
+    position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 92vw);
+    background: var(--panel); z-index: 70; transform: translateX(100%);
+    transition: transform .3s cubic-bezier(.2,.8,.2,1);
+    display: flex; flex-direction: column;
+  }
+  .drawer.open { transform: none; }
+  .d-head {
+    padding: 20px 24px; border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .d-head h3 { font-size: 17px; }
+  .d-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--muted); }
+  .d-items { flex: 1; overflow-y: auto; padding: 16px 24px; display: grid; gap: 14px; align-content: start; }
+  .d-item {
+    display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; align-items: center;
+    padding-bottom: 14px; border-bottom: 1px solid var(--border);
+  }
+  .d-item img { width: 64px; height: 64px; border-radius: 10px; object-fit: cover; }
+  .d-item b { font-size: 14px; display: block; }
+  .d-item small { color: var(--muted); }
+  .qty { display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; border: 1px solid var(--border); border-radius: 999px; padding: 2px 8px; }
+  .qty button { border: none; background: none; cursor: pointer; font-weight: 700; width: 18px; }
+  .d-foot { padding: 20px 24px; border-top: 1px solid var(--border); display: grid; gap: 12px; }
+  .d-row { display: flex; justify-content: space-between; font-size: 14px; }
+  .d-row.total { font-size: 17px; font-weight: 800; }
+  .checkout {
+    width: 100%; background: var(--accent); color: #fff; border: none;
+    padding: 14px; border-radius: 999px; font-weight: 700; font-size: 14px; cursor: pointer;
+  }
+
+  /* MODAL PRODUCT */
+  .modal {
+    position: fixed; inset: 0; z-index: 80; display: none; place-items: center;
+    background: rgba(15,15,22,.6); backdrop-filter: blur(6px); padding: 20px;
+  }
+  .modal.open { display: grid; }
+  .modal-card {
+    background: var(--panel); border-radius: 22px; max-width: 760px; width: 100%;
+    overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; position: relative;
+  }
+  .modal-card img { width: 100%; height: 100%; min-height: 320px; object-fit: cover; }
+  .modal-body { padding: 32px; display: flex; flex-direction: column; gap: 12px; }
+  .modal-close {
+    position: absolute; top: 14px; right: 16px; background: rgba(255,255,255,.9);
+    border: none; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 16px;
+  }
+
+  footer {
+    margin-top: 64px; border-top: 1px solid var(--border); background: var(--panel);
+    padding: 40px 24px; color: var(--muted); font-size: 13px; text-align: center;
+  }
+
   .toast {
-    position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 80px);
+    position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 90px);
     background: var(--text); color: #fff; padding: 12px 22px; border-radius: 999px;
-    font-size: 14px; transition: transform .3s; z-index: 50;
+    font-size: 14px; transition: transform .3s; z-index: 90;
   }
   .toast.show { transform: translate(-50%, 0); }
-  @media (max-width: 900px) { .products { grid-template-columns: repeat(2, 1fr); } nav { display: none; } }
-  @media (max-width: 480px) { .products { grid-template-columns: 1fr; } }
+
+  @media (max-width: 920px) {
+    .hero-box, .bundle, .contact-grid, .modal-card { grid-template-columns: 1fr; }
+    .products { grid-template-columns: repeat(2, 1fr); }
+    .perks { grid-template-columns: repeat(2, 1fr); }
+    .reviews { grid-template-columns: 1fr; }
+    nav { display: none; }
+  }
+  @media (max-width: 520px) {
+    .products, .perks { grid-template-columns: 1fr; }
+    .hero-box { padding: 32px 24px; }
+  }
 </style>
 </head>
 <body>
+
+<div class="promo">🚚 Darmowa dostawa od <b>199 zł</b> · Kod <b>START10</b> daje −10% na pierwsze zamówienie</div>
+
 <header>
-  <div class="logo">Aurora<span>.</span></div>
-  <nav>
-    <a href="#produkty">Produkty</a>
-    <a href="#produkty">Bestsellery</a>
-    <a href="#produkty">Nowości</a>
+  <a href="#" class="logo">Aurora<span>.</span></a>
+  <nav id="topNav">
+    <a href="#produkty" data-tab="all" class="active">Wszystkie</a>
+    <a href="#produkty" data-tab="bestseller">Bestsellery</a>
+    <a href="#produkty" data-tab="new">Nowości</a>
+    <a href="#zestaw">Zestaw tygodnia</a>
+    <a href="#opinie">Opinie</a>
     <a href="#kontakt">Kontakt</a>
   </nav>
   <button class="cart-btn" id="cartBtn">
@@ -100,87 +285,415 @@
 </header>
 
 <section class="hero">
-  <p class="tag">Nowa kolekcja 2026</p>
-  <h1>Technologia, którą pokochasz.</h1>
-  <p>Minimalistyczne akcesoria i elektronika dobrane z myślą o jakości. Darmowa dostawa od 199 zł.</p>
-  <a class="btn" href="#produkty">Przeglądaj produkty</a>
+  <div class="hero-box">
+    <div>
+      <span class="hero-tag">Kolekcja 2026 · Audio &amp; Biuro</span>
+      <h1>Sprzęt, który wygląda tak dobrze, jak działa.</h1>
+      <p>Słuchawki z redukcją szumów, klawiatury mechaniczne i akcesoria biurkowe zaprojektowane z dbałością o każdy detal.</p>
+      <div class="hero-cta">
+        <a class="btn" href="#produkty" data-go="all">Przeglądaj kolekcję →</a>
+        <a class="btn btn-outline" href="#produkty" data-go="bestseller">Zobacz bestsellery</a>
+      </div>
+    </div>
+    <img class="hero-img" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=80" alt="Słuchawki Pulse X" />
+  </div>
 </section>
 
+<div class="perks">
+  <div class="perk"><div class="perk-ic">⚡</div><div><b>Wysyłka w 24h</b><span>Zamówienia do 15:00 wysyłamy tego samego dnia</span></div></div>
+  <div class="perk"><div class="perk-ic">↩️</div><div><b>30 dni na zwrot</b><span>Bez pytań i bez kosztów przesyłki</span></div></div>
+  <div class="perk"><div class="perk-ic">🛡️</div><div><b>2 lata gwarancji</b><span>Pełne wsparcie serwisowe door-to-door</span></div></div>
+  <div class="perk"><div class="perk-ic">💳</div><div><b>Bezpieczne płatności</b><span>BLIK, karty, Apple Pay i raty 0%</span></div></div>
+</div>
+
 <section class="section" id="produkty">
-  <h2>Produkty</h2>
-  <p class="sub">Kliknij „Dodaj”, aby wrzucić produkt do koszyka.</p>
-  <input class="search" id="search" type="search" placeholder="Szukaj produktu…" />
+  <div class="sec-head">
+    <div>
+      <h2>Katalog produktów</h2>
+      <p class="sub">Kliknij kartę produktu, żeby zobaczyć szczegóły — lub dodaj od razu do koszyka.</p>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="tabs" id="tabs">
+      <button class="tab on" data-tab="all">Wszystkie (8)</button>
+      <button class="tab" data-tab="bestseller">🔥 Bestsellery</button>
+      <button class="tab" data-tab="new">✨ Nowości</button>
+      <button class="tab" data-tab="Audio">Audio</button>
+      <button class="tab" data-tab="Biuro">Biuro &amp; Akcesoria</button>
+    </div>
+    <input class="search" id="search" type="search" placeholder="Szukaj produktu…" />
+  </div>
+
   <div class="products" id="products"></div>
 </section>
 
-<footer id="kontakt">
-  Aurora Storefront — demonstracyjny sklep internetowy · HTML / CSS / JavaScript
+<section class="section" id="zestaw">
+  <div class="bundle">
+    <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1000&q=80" alt="Zestaw Home Office" />
+    <div>
+      <span class="eyebrow">Zestaw tygodnia · −15%</span>
+      <h3>Pakiet Home Office Pro</h3>
+      <p>Klawiatura mechaniczna Keyline + lampa biurkowa Lume Brass + słuchawki Pulse X ANC. Kompletny zestaw do skupionej pracy z rabatem 180 zł.</p>
+      <p style="font-size:22px;font-weight:800;margin-bottom:18px">789 zł <del style="color:var(--muted);font-weight:400;font-size:15px">967 zł</del></p>
+      <button class="btn" style="background:var(--accent);color:#fff" id="addBundle">Dodaj cały zestaw do koszyka</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="opinie">
+  <div class="sec-head">
+    <div>
+      <h2>Opinie klientów</h2>
+      <p class="sub">Średnia ocena 4,9 / 5 na podstawie ponad 1 200 zamówień.</p>
+    </div>
+  </div>
+  <div class="reviews">
+    <div class="rev">
+      <div class="rev-head">
+        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Karolina" />
+        <div><b>Karolina M.</b><span>Zweryfikowany zakup · Słuchawki Pulse X</span></div>
+      </div>
+      <div class="stars" style="margin-bottom:8px">★★★★★</div>
+      <p>„Redukcja szumów w biurze i pociągu robi ogromną różnicę. Bateria realnie trzyma ponad tydzień pracy.”</p>
+    </div>
+    <div class="rev">
+      <div class="rev-head">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michał" />
+        <div><b>Michał T.</b><span>Zweryfikowany zakup · Klawiatura Keyline</span></div>
+      </div>
+      <div class="stars" style="margin-bottom:8px">★★★★★</div>
+      <p>„Najlepsza klawiatura 75%, na jakiej pisałem. Przyjemny dźwięk przełączników i solidna aluminiowa obudowa.”</p>
+    </div>
+    <div class="rev">
+      <div class="rev-head">
+        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Zuzanna" />
+        <div><b>Zuzanna K.</b><span>Zweryfikowany zakup · Zegarek Orbit S</span></div>
+      </div>
+      <div class="stars" style="margin-bottom:8px">★★★★★</div>
+      <p>„Wygląda jak klasyczny zegarek, a ma wszystkie powiadomienia i pomiar tętna. Paczka przyszła następnego dnia.”</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="kontakt">
+  <div class="sec-head">
+    <div>
+      <h2>Masz pytanie? Napisz do nas</h2>
+      <p class="sub">Odpowiadamy średnio w 2 godziny w dni robocze.</p>
+    </div>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="c-item">📍 <div><b>Showroom Warszawa</b><span>ul. Mokotowska 48, 00-543 Warszawa<br />Pon–Sob: 10:00–19:00</span></div></div>
+      <div class="c-item">📞 <div><b>Infolinia</b><span>+48 22 300 40 50</span></div></div>
+      <div class="c-item">✉️ <div><b>E-mail</b><span>sklep@aurorastore.pl</span></div></div>
+    </div>
+    <form class="c-form" id="contactForm">
+      <input type="text" required placeholder="Twoje imię" />
+      <input type="email" required placeholder="Adres e-mail" />
+      <select>
+        <option>Pytanie o produkt</option>
+        <option>Status zamówienia</option>
+        <option>Zwrot lub reklamacja</option>
+      </select>
+      <textarea rows="4" required placeholder="Wiadomość…"></textarea>
+      <button type="submit">Wyślij wiadomość</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  © 2026 Aurora Storefront — projekt demonstracyjny w portfolio Adriana Pietrygi · HTML / CSS / JavaScript
 </footer>
 
-<div class="toast" id="toast">Dodano do koszyka ✓</div>
+<!-- SZUFLADA KOSZYKA -->
+<div class="backdrop" id="backdrop"></div>
+<aside class="drawer" id="drawer" aria-label="Koszyk">
+  <div class="d-head">
+    <h3>Twój koszyk</h3>
+    <button class="d-close" id="dClose" aria-label="Zamknij">✕</button>
+  </div>
+  <div class="d-items" id="dItems"></div>
+  <div class="d-foot">
+    <div class="d-row"><span>Dostawa</span><span id="dShip">0 zł</span></div>
+    <div class="d-row total"><span>Razem</span><span id="dTotal">0 zł</span></div>
+    <button class="checkout" id="checkoutBtn">Przejdź do kasy →</button>
+  </div>
+</aside>
+
+<!-- MODAL PRODUKTU -->
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <button class="modal-close" id="mClose">✕</button>
+    <img id="mImg" src="" alt="" />
+    <div class="modal-body">
+      <span id="mCat" style="color:var(--accent);font-size:12px;font-weight:700;text-transform:uppercase"></span>
+      <h3 id="mName" style="font-size:24px"></h3>
+      <div class="stars" id="mStars"></div>
+      <p id="mDesc" style="color:var(--muted);font-size:14px;flex:1"></p>
+      <div style="font-size:22px;font-weight:800" id="mPrice"></div>
+      <button class="btn" style="background:var(--accent);color:#fff;justify-content:center" id="mAdd">Dodaj do koszyka</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
   const products = [
-    { name: "Słuchawki Pulse X", cat: "Audio", price: 349, icon: "🎧", c1: "#e0e7ff", c2: "#c7d2fe" },
-    { name: "Zegarek Orbit S", cat: "Smartwatch", price: 899, icon: "⌚", c1: "#fce7f3", c2: "#fbcfe8" },
-    { name: "Klawiatura Keyline", cat: "Akcesoria", price: 429, icon: "⌨️", c1: "#dcfce7", c2: "#bbf7d0" },
-    { name: "Lampa Lume", cat: "Smart home", price: 189, icon: "💡", c1: "#fef3c7", c2: "#fde68a" },
-    { name: "Głośnik Wave", cat: "Audio", price: 259, icon: "🔊", c1: "#e0f2fe", c2: "#bae6fd" },
-    { name: "Kamera Snap 4K", cat: "Foto", price: 1299, icon: "📷", c1: "#fee2e2", c2: "#fecaca" },
-    { name: "Powerbank Volt 20k", cat: "Akcesoria", price: 149, icon: "🔋", c1: "#f3e8ff", c2: "#e9d5ff" },
-    { name: "Monitor Vista 27\"", cat: "Biuro", price: 1149, icon: "🖥️", c1: "#cffafe", c2: "#a5f3fc" },
+    {
+      id: "pulse-x",
+      name: "Słuchawki Pulse X ANC",
+      cat: "Audio",
+      price: 349, oldPrice: 419,
+      rating: "4.9 (214)",
+      badge: "bestseller", badgeText: "Bestseller",
+      img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80",
+      desc: "Bezprzewodowe słuchawki wokółuszne z aktywną redukcją szumów i 32h pracy na baterii."
+    },
+    {
+      id: "orbit-s",
+      name: "Smartwatch Orbit S",
+      cat: "Biuro",
+      price: 899,
+      rating: "4.8 (168)",
+      badge: "bestseller", badgeText: "Bestseller",
+      img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80",
+      desc: "Stalowa koperta, szafirowe szkło, GPS i 7 dni działania na jednym ładowaniu."
+    },
+    {
+      id: "keyline",
+      name: "Klawiatura Keyline 75%",
+      cat: "Biuro",
+      price: 429,
+      rating: "4.9 (302)",
+      badge: "bestseller", badgeText: "Bestseller",
+      img: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80",
+      desc: "Mechaniczna klawiatura hot-swap z przełącznikami tactile, USB-C i Bluetooth 5.2."
+    },
+    {
+      id: "lume",
+      name: "Lampa biurkowa Lume Brass",
+      cat: "Biuro",
+      price: 189,
+      rating: "4.7 (89)",
+      badge: "new", badgeText: "Nowość",
+      img: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+      desc: "Mosiężne ramię, ciepła barwa 2700K–4500K i płynny ściemniacz dotykowy."
+    },
+    {
+      id: "buds-pro",
+      name: "Słuchawki douszne AirBuds Pro",
+      cat: "Audio",
+      price: 259,
+      rating: "4.8 (143)",
+      badge: "new", badgeText: "Nowość",
+      img: "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&fit=crop&w=800&q=80",
+      desc: "Kieszonkowe etui MagSafe, tryb transparentny i odporność IPX5 na deszcz."
+    },
+    {
+      id: "snap-4k",
+      name: "Aparat kompaktowy Snap M",
+      cat: "Audio",
+      price: 1299, oldPrice: 1449,
+      rating: "4.9 (77)",
+      badge: "sale", badgeText: "-10%",
+      img: "https://images.unsplash.com/photo-1495121553079-4c61bcce1894?auto=format&fit=crop&w=800&q=80",
+      desc: "Matryca APS-C i jasny obiektyw 23mm f/2 — idealny na wyjazdy i street photo."
+    },
+    {
+      id: "studio-mon",
+      name: "Monitor Studioophones XM",
+      cat: "Audio",
+      price: 519,
+      rating: "4.8 (119)",
+      badge: "new", badgeText: "Nowość",
+      img: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=800&q=80",
+      desc: "Studyjne brzmienie referencyjne z odłączanym kablem i welurowymi padami."
+    },
+    {
+      id: "bag-leather",
+      name: "Torba na laptopa Nomad 15”",
+      cat: "Biuro",
+      price: 389,
+      rating: "4.9 (95)",
+      badge: "bestseller", badgeText: "Bestseller",
+      img: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=80",
+      desc: "Skóra licowa garbowana roślinnie, wyściełana przegroda na laptopa 15 cali."
+    },
   ];
 
-  let cart = 0;
-  const grid = document.getElementById("products");
   const fmt = new Intl.NumberFormat("pl-PL", { style: "currency", currency: "PLN", maximumFractionDigits: 0 });
+  const grid = document.getElementById("products");
+  let activeTab = "all";
+  let query = "";
+  const cart = new Map(); // id -> qty
 
-  function render(filter = "") {
+  function render() {
     grid.innerHTML = "";
-    products
-      .filter(p => p.name.toLowerCase().includes(filter.toLowerCase()))
-      .forEach(p => {
-        const el = document.createElement("article");
-        el.className = "product";
-        el.innerHTML = `
-          <div class="thumb" style="--c1:${p.c1};--c2:${p.c2}">${p.icon}</div>
-          <div class="p-body">
-            <div class="p-name">${p.name}</div>
-            <div class="p-cat">${p.cat}</div>
-            <div class="p-foot">
-              <span class="price">${fmt.format(p.price)}</span>
-              <button class="add">Dodaj</button>
-            </div>
-          </div>`;
-        el.querySelector(".add").addEventListener("click", () => addToCart(p.name));
-        grid.appendChild(el);
-      });
-    if (!grid.children.length) {
-      grid.innerHTML = `<p style="color:var(--muted);grid-column:1/-1">Brak produktów dla tej frazy.</p>`;
+    const list = products.filter(p => {
+      const matchTab =
+        activeTab === "all" ||
+        p.badge === activeTab ||
+        p.cat === activeTab;
+      const matchQ = p.name.toLowerCase().includes(query.toLowerCase()) ||
+                     p.desc.toLowerCase().includes(query.toLowerCase());
+      return matchTab && matchQ;
+    });
+
+    list.forEach(p => {
+      const el = document.createElement("article");
+      el.className = "product";
+      el.innerHTML = `
+        ${p.badge ? `<span class="badge ${p.badge}">${p.badgeText}</span>` : ""}
+        <div class="thumb-wrap"><img class="thumb" src="${p.img}" alt="${p.name}" loading="lazy" /></div>
+        <div class="p-body">
+          <div class="p-top"><span>${p.cat}</span><span class="stars">★ ${p.rating}</span></div>
+          <div class="p-name">${p.name}</div>
+          <div class="p-desc">${p.desc}</div>
+          <div class="p-foot">
+            <span class="price">${fmt.format(p.price)}${p.oldPrice ? `<del>${fmt.format(p.oldPrice)}</del>` : ""}</span>
+            <button class="add">+ Do koszyka</button>
+          </div>
+        </div>`;
+      el.querySelector(".thumb-wrap").addEventListener("click", () => openModal(p));
+      el.querySelector(".p-name").addEventListener("click", () => openModal(p));
+      el.querySelector(".add").addEventListener("click", () => addToCart(p.id, 1));
+      grid.appendChild(el);
+    });
+
+    if (!list.length) {
+      grid.innerHTML = `<p style="color:var(--muted);grid-column:1/-1;padding:24px 0">Brak produktów spełniających kryteria.</p>`;
     }
   }
 
-  let toastTimer;
-  function addToCart(name) {
-    cart++;
-    document.getElementById("cartCount").textContent = cart;
-    const toast = document.getElementById("toast");
-    toast.textContent = `Dodano: ${name} ✓`;
-    toast.classList.add("show");
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
+  function setTab(tab) {
+    activeTab = tab;
+    document.querySelectorAll("#tabs .tab").forEach(b => b.classList.toggle("on", b.dataset.tab === tab));
+    document.querySelectorAll("#topNav a[data-tab]").forEach(a => a.classList.toggle("active", a.dataset.tab === tab));
+    render();
   }
 
-  document.getElementById("cartBtn").addEventListener("click", () => {
-    const toast = document.getElementById("toast");
-    toast.textContent = cart === 0 ? "Koszyk jest pusty" : `W koszyku: ${cart} prod. — demo, bez płatności`;
-    toast.classList.add("show");
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove("show"), 2000);
+  document.getElementById("tabs").addEventListener("click", e => {
+    const b = e.target.closest(".tab");
+    if (b) setTab(b.dataset.tab);
   });
 
-  document.getElementById("search").addEventListener("input", e => render(e.target.value));
+  document.querySelectorAll("[data-tab],[data-go]").forEach(el => {
+    el.addEventListener("click", () => {
+      const t = el.dataset.tab || el.dataset.go;
+      if (t) setTab(t);
+    });
+  });
+
+  document.getElementById("search").addEventListener("input", e => { query = e.target.value; render(); });
+
+  // CART
+  function addToCart(id, delta = 1) {
+    cart.set(id, (cart.get(id) || 0) + delta);
+    if (cart.get(id) <= 0) cart.delete(id);
+    updateCartUI();
+    const p = products.find(x => x.id === id);
+    if (delta > 0 && p) showToast(`Dodano do koszyka: ${p.name} ✓`);
+  }
+
+  function updateCartUI() {
+    let count = 0, sum = 0;
+    const box = document.getElementById("dItems");
+    box.innerHTML = "";
+    cart.forEach((qty, id) => {
+      const p = products.find(x => x.id === id);
+      if (!p) return;
+      count += qty;
+      sum += p.price * qty;
+      const row = document.createElement("div");
+      row.className = "d-item";
+      row.innerHTML = `
+        <img src="${p.img}" alt="${p.name}" />
+        <div>
+          <b>${p.name}</b>
+          <small>${fmt.format(p.price)} / szt.</small><br />
+          <span class="qty">
+            <button data-act="dec">−</button>
+            <span>${qty}</span>
+            <button data-act="inc">+</button>
+          </span>
+        </div>
+        <b>${fmt.format(p.price * qty)}</b>`;
+      row.querySelector('[data-act="dec"]').addEventListener("click", () => addToCart(id, -1));
+      row.querySelector('[data-act="inc"]').addEventListener("click", () => addToCart(id, 1));
+      box.appendChild(row);
+    });
+    if (!count) {
+      box.innerHTML = `<p style="color:var(--muted);text-align:center;padding:40px 0">Twój koszyk jest pusty.<br/>Dodaj dowolny produkt z katalogu.</p>`;
+    }
+    document.getElementById("cartCount").textContent = count;
+    const ship = sum === 0 || sum >= 199 ? 0 : 19;
+    document.getElementById("dShip").textContent = ship === 0 ? "Gratis" : fmt.format(ship);
+    document.getElementById("dTotal").textContent = fmt.format(sum + ship);
+  }
+
+  const drawer = document.getElementById("drawer");
+  const backdrop = document.getElementById("backdrop");
+  function openCart() { drawer.classList.add("open"); backdrop.classList.add("open"); }
+  function closeCart() { drawer.classList.remove("open"); backdrop.classList.remove("open"); }
+  document.getElementById("cartBtn").addEventListener("click", openCart);
+  document.getElementById("dClose").addEventListener("click", closeCart);
+  backdrop.addEventListener("click", closeCart);
+
+  document.getElementById("checkoutBtn").addEventListener("click", () => {
+    if (!cart.size) { showToast("Dodaj najpierw produkt do koszyka"); return; }
+    cart.clear();
+    updateCartUI();
+    closeCart();
+    showToast("Zamówienie testowe przyjęte! Dziękujemy 🎉");
+  });
+
+  document.getElementById("addBundle").addEventListener("click", () => {
+    ["pulse-x", "keyline", "lume"].forEach(id => cart.set(id, (cart.get(id) || 0) + 1));
+    updateCartUI();
+    openCart();
+  });
+
+  // MODAL
+  const modal = document.getElementById("modal");
+  let modalProduct = null;
+  function openModal(p) {
+    modalProduct = p;
+    document.getElementById("mImg").src = p.img;
+    document.getElementById("mCat").textContent = p.cat;
+    document.getElementById("mName").textContent = p.name;
+    document.getElementById("mStars").textContent = "★★★★★ " + p.rating;
+    document.getElementById("mDesc").textContent = p.desc;
+    document.getElementById("mPrice").textContent = fmt.format(p.price);
+    modal.classList.add("open");
+  }
+  document.getElementById("mClose").addEventListener("click", () => modal.classList.remove("open"));
+  modal.addEventListener("click", e => { if (e.target === modal) modal.classList.remove("open"); });
+  document.getElementById("mAdd").addEventListener("click", () => {
+    if (modalProduct) addToCart(modalProduct.id, 1);
+    modal.classList.remove("open");
+  });
+
+  // CONTACT
+  document.getElementById("contactForm").addEventListener("submit", e => {
+    e.preventDefault();
+    e.target.reset();
+    showToast("Wiadomość wysłana! Odpowiemy wkrótce ✉️");
+  });
+
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove("show"), 2200);
+  }
+
   render();
+  updateCartUI();
 </script>
 </body>
 </html>
