@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aurora Storefront — Sklep internetowy</title>
+<meta name="description" content="Aurora Storefront — minimalistyczny sklep z elektroniką i akcesoriami." />
+<style>
+  :root {
+    --bg: #fafafa;
+    --panel: #ffffff;
+    --border: #e8e8ec;
+    --text: #17171c;
+    --muted: #71717a;
+    --accent: #7c5cf6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Segoe UI", system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); }
+  header {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 24px; background: rgba(255,255,255,.85); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { font-weight: 800; font-size: 18px; letter-spacing: -0.02em; }
+  .logo span { color: var(--accent); }
+  nav { display: flex; gap: 20px; }
+  nav a { color: var(--muted); text-decoration: none; font-size: 14px; transition: .15s; }
+  nav a:hover { color: var(--text); }
+  .cart-btn {
+    display: flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border); background: var(--panel);
+    border-radius: 999px; padding: 8px 16px; font-size: 14px; cursor: pointer; transition: .15s;
+  }
+  .cart-btn:hover { border-color: var(--accent); }
+  .cart-count {
+    background: var(--accent); color: #fff; font-size: 11px; font-weight: 700;
+    border-radius: 999px; min-width: 20px; height: 20px; display: grid; place-items: center;
+  }
+  .hero { text-align: center; padding: 80px 24px 56px; }
+  .hero .tag { color: var(--accent); font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+  .hero h1 { font-size: clamp(32px, 6vw, 56px); letter-spacing: -0.03em; margin: 14px 0; }
+  .hero p { color: var(--muted); max-width: 520px; margin: 0 auto 28px; font-size: 17px; }
+  .btn {
+    display: inline-block; background: var(--text); color: #fff; text-decoration: none;
+    padding: 13px 28px; border-radius: 999px; font-size: 14px; font-weight: 600; transition: .2s;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -8px rgba(0,0,0,.25); }
+  .section { max-width: 1100px; margin: 0 auto; padding: 48px 24px; }
+  .section h2 { font-size: 24px; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .section .sub { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .products { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .product {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 16px;
+    overflow: hidden; transition: .2s;
+  }
+  .product:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -20px rgba(0,0,0,.15); }
+  .thumb {
+    aspect-ratio: 1; display: grid; place-items: center; font-size: 52px;
+    background: linear-gradient(135deg, var(--c1), var(--c2));
+  }
+  .p-body { padding: 16px; }
+  .p-name { font-weight: 600; font-size: 15px; }
+  .p-cat { color: var(--muted); font-size: 12px; margin: 4px 0 10px; }
+  .p-foot { display: flex; justify-content: space-between; align-items: center; }
+  .price { font-weight: 700; }
+  .add {
+    border: 1px solid var(--border); background: none; border-radius: 999px;
+    padding: 7px 14px; font-size: 12px; font-weight: 600; cursor: pointer; transition: .15s;
+  }
+  .add:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .search {
+    width: 100%; max-width: 420px; padding: 12px 18px; border: 1px solid var(--border);
+    border-radius: 999px; font-size: 14px; margin: 0 0 28px; outline: none; transition: .15s;
+  }
+  .search:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(124,92,246,.12); }
+  footer { border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; text-align: center; padding: 32px 24px; }
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 80px);
+    background: var(--text); color: #fff; padding: 12px 22px; border-radius: 999px;
+    font-size: 14px; transition: transform .3s; z-index: 50;
+  }
+  .toast.show { transform: translate(-50%, 0); }
+  @media (max-width: 900px) { .products { grid-template-columns: repeat(2, 1fr); } nav { display: none; } }
+  @media (max-width: 480px) { .products { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Aurora<span>.</span></div>
+  <nav>
+    <a href="#produkty">Produkty</a>
+    <a href="#produkty">Bestsellery</a>
+    <a href="#produkty">Nowości</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+  <button class="cart-btn" id="cartBtn">
+    🛒 Koszyk <span class="cart-count" id="cartCount">0</span>
+  </button>
+</header>
+
+<section class="hero">
+  <p class="tag">Nowa kolekcja 2026</p>
+  <h1>Technologia, którą pokochasz.</h1>
+  <p>Minimalistyczne akcesoria i elektronika dobrane z myślą o jakości. Darmowa dostawa od 199 zł.</p>
+  <a class="btn" href="#produkty">Przeglądaj produkty</a>
+</section>
+
+<section class="section" id="produkty">
+  <h2>Produkty</h2>
+  <p class="sub">Kliknij „Dodaj”, aby wrzucić produkt do koszyka.</p>
+  <input class="search" id="search" type="search" placeholder="Szukaj produktu…" />
+  <div class="products" id="products"></div>
+</section>
+
+<footer id="kontakt">
+  Aurora Storefront — demonstracyjny sklep internetowy · HTML / CSS / JavaScript
+</footer>
+
+<div class="toast" id="toast">Dodano do koszyka ✓</div>
+
+<script>
+  const products = [
+    { name: "Słuchawki Pulse X", cat: "Audio", price: 349, icon: "🎧", c1: "#e0e7ff", c2: "#c7d2fe" },
+    { name: "Zegarek Orbit S", cat: "Smartwatch", price: 899, icon: "⌚", c1: "#fce7f3", c2: "#fbcfe8" },
+    { name: "Klawiatura Keyline", cat: "Akcesoria", price: 429, icon: "⌨️", c1: "#dcfce7", c2: "#bbf7d0" },
+    { name: "Lampa Lume", cat: "Smart home", price: 189, icon: "💡", c1: "#fef3c7", c2: "#fde68a" },
+    { name: "Głośnik Wave", cat: "Audio", price: 259, icon: "🔊", c1: "#e0f2fe", c2: "#bae6fd" },
+    { name: "Kamera Snap 4K", cat: "Foto", price: 1299, icon: "📷", c1: "#fee2e2", c2: "#fecaca" },
+    { name: "Powerbank Volt 20k", cat: "Akcesoria", price: 149, icon: "🔋", c1: "#f3e8ff", c2: "#e9d5ff" },
+    { name: "Monitor Vista 27\"", cat: "Biuro", price: 1149, icon: "🖥️", c1: "#cffafe", c2: "#a5f3fc" },
+  ];
+
+  let cart = 0;
+  const grid = document.getElementById("products");
+  const fmt = new Intl.NumberFormat("pl-PL", { style: "currency", currency: "PLN", maximumFractionDigits: 0 });
+
+  function render(filter = "") {
+    grid.innerHTML = "";
+    products
+      .filter(p => p.name.toLowerCase().includes(filter.toLowerCase()))
+      .forEach(p => {
+        const el = document.createElement("article");
+        el.className = "product";
+        el.innerHTML = `
+          <div class="thumb" style="--c1:${p.c1};--c2:${p.c2}">${p.icon}</div>
+          <div class="p-body">
+            <div class="p-name">${p.name}</div>
+            <div class="p-cat">${p.cat}</div>
+            <div class="p-foot">
+              <span class="price">${fmt.format(p.price)}</span>
+              <button class="add">Dodaj</button>
+            </div>
+          </div>`;
+        el.querySelector(".add").addEventListener("click", () => addToCart(p.name));
+        grid.appendChild(el);
+      });
+    if (!grid.children.length) {
+      grid.innerHTML = `<p style="color:var(--muted);grid-column:1/-1">Brak produktów dla tej frazy.</p>`;
+    }
+  }
+
+  let toastTimer;
+  function addToCart(name) {
+    cart++;
+    document.getElementById("cartCount").textContent = cart;
+    const toast = document.getElementById("toast");
+    toast.textContent = `Dodano: ${name} ✓`;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
+  }
+
+  document.getElementById("cartBtn").addEventListener("click", () => {
+    const toast = document.getElementById("toast");
+    toast.textContent = cart === 0 ? "Koszyk jest pusty" : `W koszyku: ${cart} prod. — demo, bez płatności`;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2000);
+  });
+
+  document.getElementById("search").addEventListener("input", e => render(e.target.value));
+  render();
+</script>
+</body>
+</html>
